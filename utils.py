@@ -99,16 +99,16 @@ def get_maturity_adjusment(pd, m, y=2.5):
         :return maturity_adj:
     """
     slope = get_maturity_slope(pd)
-    return np.divide(1 + (m - y) * slope, 1 - (y - 1) * slope)
+    return np.divide(1 + (m - y) * slope, 1 - 1.5 * slope)
 
 
 def get_basel_K(pd, m, lgd, alpha):
     """
         DESCRIPTION:
         ------------
-        Capital requirement (K) = 
-        [LGD * N [(1 - R)^-0.5 * G (PD) + (R / (1 - R))^0.5 * G (0.999)] - PD * LGD] 
-        * (1 - 1.5 x b(PD))^ -1 × (1 + (M - 2.5) * b (PD)
+        Capital requirement (K) =
+        [LGD * N [(1 - R)^-0.5 * G (PD) + (R / (1 - R))^0.5 * G (0.999)] - PD * LGD]
+        * (1 - 1.5 x b(PD))^ -1 × (1 + (M - 2.5) * b (PD))
 
         Standard normal distribution(N) applied to threshold and conservative value of systematic
         factor.
