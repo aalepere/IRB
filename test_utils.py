@@ -2,7 +2,7 @@
 import numpy as np
 import pandas as pd
 
-from utils import get_average_PD, get_rho_asset_correlation
+from utils import get_average_PD, get_rho_asset_correlation, get_maturity_slope
 
 
 class TestAveragePD:
@@ -68,3 +68,28 @@ class TestAssetCorrelation:
         output = np.array([0.24, 0.12, 0.192783679165516])
         rho_calc = get_rho_asset_correlation(input)
         np.testing.assert_array_equal(rho_calc, output)
+
+
+class TestMaturity:
+    """
+        XXX
+    """
+    def test_slope_one_value(self):
+        """
+        """
+        slope = get_maturity_slope(0.1)
+        test_slope = (0.11852 - 0.05478*np.log(0.1))**2
+        slope2 = get_maturity_slope(0.2)
+        test_slope2 = (0.11852 - 0.05478*np.log(0.2))**2
+        assert test_slope == slope
+        assert test_slope2 == slope2
+
+    def test_slope_multiple_values(self):
+        """
+        """
+        test_slope = (0.11852 - 0.05478*np.log(0.1))**2
+        test_slope2 = (0.11852 - 0.05478*np.log(0.2))**2
+        test_array = np.array([test_slope, test_slope2])
+        slope_array = get_maturity_slope(np.array([0.1, 0.2]))
+        np.testing.assert_array_equal(test_array, slope_array)
+
