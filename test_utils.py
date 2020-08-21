@@ -34,7 +34,7 @@ class TestAssetCorrelation:
             Test rho calculation when PD = 0%.
             Expected result 24%
         """
-        rho = get_rho_asset_correlation(0.0)
+        rho = get_rho_asset_correlation(np.array(0.0))
         assert rho == 0.24
 
     def test_rho_pd_100(self):
@@ -42,7 +42,7 @@ class TestAssetCorrelation:
             Test rho calculation when PD = 100%
             Expected result 12%
         """
-        rho = get_rho_asset_correlation(1.0)
+        rho = get_rho_asset_correlation(np.array(1.0))
         assert rho == 0.12
 
     def test_rho_pd_1(self):
@@ -56,6 +56,15 @@ class TestAssetCorrelation:
         """
         exponential_weights = (1 - np.exp(-50 * 0.01)) / (1 - np.exp(-50))
         rho = 0.12 * (exponential_weights) + 0.24 * (1 - exponential_weights)
-        rho_calc = get_rho_asset_correlation(0.01)
+        rho_calc = get_rho_asset_correlation(np.array(0.01))
         assert rho == rho_calc
         assert rho_calc == 0.192783679165516
+
+    def test_with_array(self):
+        """
+            Test that when we have an array with the 3 above we get the same results.
+        """
+        input = np.array([0.0, 1.0, 0.01])
+        output = np.array([0.24, 0.12, 0.192783679165516])
+        rho_calc = get_rho_asset_correlation(input)
+        np.testing.assert_array_equal(rho_calc, output)
