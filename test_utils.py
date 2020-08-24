@@ -69,7 +69,8 @@ class TestAssetCorrelation:
         input = np.array([0.0, 1.0, 0.01])
         output = np.array([0.24, 0.12, 0.192783679165516])
         rho_calc = get_rho_asset_correlation(input)
-        np.testing.assert_array_equal(rho_calc, output)
+        test = np.testing.assert_array_equal(rho_calc, output)
+        assert test is None
 
 
 class TestMaturity:
@@ -96,7 +97,8 @@ class TestMaturity:
         test_slope2 = (0.11852 - 0.05478 * np.log(0.2)) ** 2
         test_array = np.array([test_slope, test_slope2])
         slope_array = get_maturity_slope(np.array([0.1, 0.2]))
-        np.testing.assert_array_equal(test_array, slope_array)
+        test = np.testing.assert_array_equal(test_array, slope_array)
+        assert test is None
 
     def test_maturity_adj_one_value(self):
         """
@@ -110,7 +112,7 @@ class TestMaturity:
         assert test_ma == ma
         assert test_ma2 == ma2
 
-    def test_maturity_adj_one_value(self):
+    def test_maturity_adj_multi_value(self):
         """
         """
         test_slope = (0.11852 - 0.05478 * np.log(0.1)) ** 2
@@ -119,4 +121,5 @@ class TestMaturity:
         test_ma2 = (1 + (1 - 2.5) * test_slope2) / (1 - 1.5 * test_slope2)
         ma_array = get_maturity_adjusment(pd=np.array([0.1, 0.2]), m=np.array([1, 1]))
         test_array = np.array([test_ma, test_ma2])
-        np.testing.assert_array_equal(test_array, ma_array)
+        test = np.testing.assert_array_equal(test_array, ma_array)
+        assert test is None
