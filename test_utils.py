@@ -2,12 +2,7 @@
 import numpy as np
 
 import pandas as pd
-from utils import (
-    get_average_PD,
-    get_maturity_adjusment,
-    get_maturity_slope,
-    get_rho_asset_correlation,
-)
+from utils import get_average_PD, get_maturity_adjusment, get_maturity_slope, get_rho_asset_correlation
 
 
 class TestAveragePD:
@@ -32,6 +27,8 @@ class TestAssetCorrelation:
         - PD = 0%
         - PD = 100%
         - PD = 1%
+
+        Test that the fco works also when imput is an array
     """
 
     def test_rho_pd_0(self):
@@ -77,7 +74,9 @@ class TestAssetCorrelation:
 
 class TestMaturity:
     """
-        XXX
+        Test the function that computes maturity adjustement:
+        - for an exposure
+        - for multiple exposures
     """
 
     def test_slope_one_value(self):
