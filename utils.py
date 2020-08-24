@@ -41,11 +41,11 @@ def get_rho_asset_correlation(pd, k_factor=-50, rho_min=0.12, rho_max=0.24):
 
         PARAMS:
         -------
-        :param pd: average PD from portfolio
+        :param pd: arrays of PDs from portfolio
         :param k_factor: Set to 50 for corporates exposures
         :param rho_min: 12% min limit, for PDs = 100%
         :param rho_max: 14% max limit, for PDs = 0%
-        :return rho: assets correlation
+        :return rho: array of assets correlation
     """
     exponential_weights = np.divide((1 - np.exp(k_factor * pd)), (1 - np.exp(k_factor)))
     return rho_min * exponential_weights + rho_max * (1 - exponential_weights)
@@ -71,10 +71,10 @@ def get_maturity_slope(pd, a=0.11852, b=-0.05478):
 
         PARAMS:
         -------
-        :param pd: pd associated to the exposure [0, 1]
+        :param pd: array of PDs from portfolio
         :param a: slope adjustment coefficient 1
         :param b: slope adjustement coefficient 2
-        :return maturity_slope: Smoothed (regression) maturity adjustment (smoothed over PDs)
+        :return maturity_slope: array of Smoothed (regression) maturity adjustment (smoothed over PDs)
     """
     return np.power((a + b * np.log(pd)), 2)
 
@@ -93,10 +93,10 @@ def get_maturity_adjusment(pd, m, y=2.5):
 
         PARAMS:
         -------
-        :params pd:
-        :params tenor:
-        :params y:
-        :return maturity_adj:
+        :param pd: array of PDs from portfolio
+        :param tenor: array of tenors from portfolio or remaining term to maturity
+        :param y: standard maturity, 2.5 years
+        :return maturity_adj: array of maturity adjustments used in risk-capital allocation
     """
     slope = get_maturity_slope(pd)
     return np.divide(1 + (m - y) * slope, 1 - 1.5 * slope)
@@ -122,6 +122,11 @@ def get_basel_K(pd, m, lgd, alpha):
 
         PARAMS:
         -------
+        :param pd: array of PD from portfolio
+        :param m: array of tenor, i.e. remaining term to maturity
+        :param lgd: loss given default
+        :param alpha: level of confidence
+        :return K: array of risk-capital contribution for each exposure in portfolio
     """
     rho = get_rho_asset_correlation(pd)
     ma = get_maturity_adjusment(pd, m)
