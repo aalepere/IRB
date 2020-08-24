@@ -30,4 +30,4 @@ The unexpected loss is thus essentially the worst-case loss, for a given level o
 We have defined Kalpha(n) as the *nth* risk-capital contribution. Practically, it is a function of two main arguments: the unconditional default probability, pn , and the tenor, or term to maturity, of the underlying credit obligation denoted Mn.
 
 <img src="https://render.githubusercontent.com/render/math?math=K\alpha(Tenor, PD)=EAD*LGD*(Conditional Default Probability - Unconditional Default Probability)*MaturityAdjustement">
-<img src="https://render.githubusercontent.com/render/math?math=K\alpha(Tenor, PD)=EAD*LGD*(PD(\Phi^-1(\alpha) - PD)*Ma">
+<img src="https://render.githubusercontent.com/render/math?math=K\alpha(Tenor, PD)=EAD*LGD*(PD(\Phi^-1(\alpha)) - PD)*Ma">
