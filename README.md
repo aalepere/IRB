@@ -15,4 +15,10 @@ As described in the previous section, the assumption of portfolio invariance imp
 
 We can denote the risk-capital contribution of the *nth* obligor as RCn(alpha) where alpha is level of confidence (for IRB 99.9%). Therefore, the total risk-capital can ne defined as:
 
-<img src="https://render.githubusercontent.com/render/math?math=RC\alpha = $$\sum_{n=1}^{N} RCn(alpha)">
+<img src="https://render.githubusercontent.com/render/math?math=RC\alpha = \sum_{n=1}^{N} RCn(\alpha)">
+where N represents the number of obligors in the portfolio.
+
+According to the current Basel IRB guidance, the risk-capital contribution of the *nth* obligor is denoted as:
+
+<img src="https://render.githubusercontent.com/render/math?math=RCn(\alpha) = \mu n * K\alpha(n)">
+where mun detones the obligor exposure and equal to EAD * LGD.
