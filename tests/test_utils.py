@@ -2,7 +2,7 @@
 import numpy as np
 
 import pandas as pd
-from utils import get_average_PD, get_maturity_adjusment, get_maturity_slope, get_rho_asset_correlation
+from utils.utils import get_average_PD, get_maturity_adjusment, get_maturity_slope, get_rho_asset_correlation
 
 
 class TestAveragePD:
