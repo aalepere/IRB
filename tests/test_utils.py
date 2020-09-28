@@ -1,8 +1,14 @@
 """ Unit tests for all the functions in utils.py """
 import numpy as np
-
 import pandas as pd
-from utils.utils import get_average_PD, get_maturity_adjusment, get_maturity_slope, get_rho_asset_correlation
+
+from utils.utils import (
+    get_average_PD,
+    get_basel_K,
+    get_maturity_adjusment,
+    get_maturity_slope,
+    get_rho_asset_correlation,
+)
 
 
 class TestAveragePD:
@@ -82,6 +88,7 @@ class TestMaturity:
 
     def test_slope_one_value(self):
         """
+            test maturity slope calculation for one value
         """
         slope = get_maturity_slope(0.1)
         test_slope = (0.11852 - 0.05478 * np.log(0.1)) ** 2
@@ -92,6 +99,7 @@ class TestMaturity:
 
     def test_slope_multiple_values(self):
         """
+            test maturity slope for multiple values
         """
         test_slope = (0.11852 - 0.05478 * np.log(0.1)) ** 2
         test_slope2 = (0.11852 - 0.05478 * np.log(0.2)) ** 2
@@ -102,6 +110,7 @@ class TestMaturity:
 
     def test_maturity_adj_one_value(self):
         """
+            test maturity adjustment using one value
         """
         test_slope = (0.11852 - 0.05478 * np.log(0.1)) ** 2
         test_ma = (1 + (1 - 2.5) * test_slope) / (1 - 1.5 * test_slope)
@@ -114,6 +123,7 @@ class TestMaturity:
 
     def test_maturity_adj_multi_value(self):
         """
+            test maturity adj multiple values
         """
         test_slope = (0.11852 - 0.05478 * np.log(0.1)) ** 2
         test_ma = (1 + (1 - 2.5) * test_slope) / (1 - 1.5 * test_slope)
@@ -122,4 +132,28 @@ class TestMaturity:
         ma_array = get_maturity_adjusment(pd=np.array([0.1, 0.2]), m=np.array([1, 1]))
         test_array = np.array([test_ma, test_ma2])
         test = np.testing.assert_array_equal(test_array, ma_array)
+        assert test is None
+
+
+class TestCapitalK:
+    """
+        Test computation of basel capital requirements, for all obligors provided in a csv file
+    """
+
+    def test_capital_k(self):
+        """
+            Test capital K for all obligors in csv test file
+        """
+        import pandas as pd
+
+        # Intialize parameters to be used
+        df = pd.read_csv("tests/test_data_excel_csv.csv")
+        lgd = 1
+        alpha = 0.999
+        pd = np.array(df["PD"])
+        m = np.array(df["M"])
+
+        results = get_basel_K(pd, m, lgd, alpha)
+        compare_test = np.array(df["K"])
+        test = np.testing.assert_array_equal(results.round(4), compare_test.round(4))
         assert test is None

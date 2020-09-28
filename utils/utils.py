@@ -130,7 +130,7 @@ def get_basel_K(pd, m, lgd, alpha):
     """
     rho = get_rho_asset_correlation(pd)
     ma = get_maturity_adjusment(pd, m)
-    term_1 = np.add(((1 - rho) ^ (-0.5)), norm.ppf(pd))
-    term_2 = np.multiply((((rho) / (1 - rho)) ^ 0.5), norm.ppf(alpha))
+    term_1 = np.add(np.sqrt(1/(1 - rho)), norm.ppf(pd))
+    term_2 = np.multiply((np.sqrt((rho) / (1 - rho))), norm.ppf(alpha))
     term_3 = norm.cdf(np.add(term_1, term_2))
     return (lgd * term_3 - pd * lgd) * ma
