@@ -143,12 +143,13 @@ class TestCapitalK:
     def test_capital_k(self):
         """
             Test capital K for all obligors in csv test file
+            https://www.bis.org/basel_framework/chapter/CRE/99.htm?inforce=20191215
         """
         import pandas as pd
 
         # Intialize parameters to be used
         df = pd.read_csv("tests/test_data_excel_csv.csv")
-        lgd = 1
+        lgd = 0.45
         alpha = 0.999
         pd = np.array(df["PD"])
         m = np.array(df["M"])
