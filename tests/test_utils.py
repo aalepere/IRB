@@ -2,7 +2,7 @@
 import numpy as np
 import pandas as pd
 
-from utils.utils import (
+from utils.utils_IRB import (
     get_average_PD,
     get_basel_K,
     get_maturity_adjusment,
